@@ -2,8 +2,8 @@ import unittest
 
 from dataclasses import dataclass
 
-from tabulated.pandas_table import PandasBox
-from tabulated.sqlite_table import LiteBox
+from pandasbox.pandas_table import PandasBox
+from pandasbox.sqlite_table import PandasBox
 
 
 @dataclass
@@ -17,14 +17,11 @@ def test_index_on_missing_attributes(table_class):
     tb = table_class(on={"z": float})
     t = Thing()
     tb.add(t)
-    if table_class == PandasBox:
-        found = tb.find("z != z")
-    elif table_class == LiteBox:
-        found = tb.find("z is null")
+    found = tb.find("z != z")
     assert found == [t]
 
 
-def test_multiple_tabulated_instances(table_class):
+def test_multiple_pandasbox_instances(table_class):
     t1 = Thing()
     ri1 = table_class(on={"x": int})
     ri1.add(t1)

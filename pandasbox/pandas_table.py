@@ -3,9 +3,9 @@ from typing import Dict, Any, List, Optional
 import numpy as np
 import pandas as pd
 
-from tabulated.constants import PYOBJ_COL, PYOBJ_ID_COL
-from tabulated.exceptions import NotInIndexError
-from tabulated.utils import get_field, set_field, validate_fields
+from pandasbox.constants import PYOBJ_COL, PYOBJ_ID_COL
+from pandasbox.exceptions import NotInIndexError
+from pandasbox.utils import get_field, set_field, validate_fields
 from typing import Iterable, Any, List
 
 

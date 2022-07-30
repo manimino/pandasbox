@@ -1,10 +1,10 @@
 import pytest
 
-from tabulated.sqlite_table import LiteBox
-from tabulated.pandas_table import PandasBox
+from pandasbox.sqlite_table import PandasBox
+from pandasbox.pandas_table import PandasBox
 
 
-@pytest.fixture(params=[LiteBox, PandasBox])
+@pytest.fixture(params=[PandasBox, PandasBox])
 def table_class(request):
     return request.param
 

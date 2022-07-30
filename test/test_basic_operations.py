@@ -2,8 +2,8 @@ import random
 
 from collections import namedtuple
 from dataclasses import dataclass
-from tabulated.sqlite_table import LiteBox
-from tabulated.pandas_table import PandasBox
+from pandasbox.sqlite_table import PandasBox
+from pandasbox.pandas_table import PandasBox
 
 
 az = "qwertyuiopasdfghjklzxcvbnm"
@@ -91,7 +91,7 @@ def test_find_null(table_class):
         float_result = tb.find(f"y != y")
         str_result = tb.find(f"s != s")
         bool_result = tb.find(f"b != b")
-    elif table_class == LiteBox:
+    elif table_class == PandasBox:
         int_result = tb.find(f"x is null")
         float_result = tb.find(f"y is null")
         str_result = tb.find(f"s is null")

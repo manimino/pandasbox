@@ -1,7 +1,7 @@
 import random
 import time
 
-from tabulated import PandasBox
+from pandasbox import PandasBox
 
 
 def test_pandas():
@@ -10,7 +10,7 @@ def test_pandas():
     ri = PandasBox(data, {"num": float})
     t0 = time.time()
     ri_matches = ri.find("num <= 0.001")
-    t_tabulated = time.time() - t0
+    t_pandasbox = time.time() - t0
 
     t0 = time.time()
     lc_matches = [d for d in data if d["num"] <= 0.001]
@@ -18,7 +18,7 @@ def test_pandas():
     
     assert len(ri_matches) == len(lc_matches)
     assert len(lc_matches) > 0
-    assert t_listcomp / t_tabulated > 2
+    assert t_listcomp / t_pandasbox > 2
     assert t_listcomp < 1
 
 

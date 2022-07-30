@@ -2,8 +2,8 @@ import math
 import random
 import string
 import time
-from tabulated import Tabulated
-from tabulated.constants import PANDAS, SQLITE
+from pandasbox import PandasBox
+from pandasbox.constants import PANDAS, SQLITE
 
 
 class Thing:
@@ -94,14 +94,14 @@ def run_float_benchmark(engine, n=10 ** 5, n_runs=5):
     print(f"building {engine} index")
     t0 = time.time()
     if engine == SQLITE:
-        ri = Tabulated(
+        ri = PandasBox(
             things,
             {"f0": float, "f1": float},
             engine=engine,
             table_index=[("f0", "f1")],
         )
     else:
-        ri = Tabulated(things, {"f0": float, "f1": float}, engine=engine)
+        ri = PandasBox(things, {"f0": float, "f1": float}, engine=engine)
     t1 = time.time()
     results[f"build {engine}"] = time_str(t1 - t0)
 
@@ -116,7 +116,7 @@ def run_float_benchmark(engine, n=10 ** 5, n_runs=5):
         matches, t = linear_floats(things, n_items, n_runs)
         results[f"baseline"][num_str(n_items)] = (num_str(matches), time_str(t))
 
-        # do tabulated
+        # do pandasbox
         query_floats(
             ri, n_items, 2
         )  # warm up caches first to produce steady-state-like performance
