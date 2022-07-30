@@ -2,15 +2,15 @@ from typing import List, Tuple, Dict, Any, Optional, Iterable, Union, Optional
 
 import sqlite3
 
-from tabulated.constants import *
-from tabulated.exceptions import NotInIndexError
-from tabulated.globals import get_next_table_id
-from tabulated.utils import get_field, set_field, validate_fields
+from pandasbox.constants import *
+from pandasbox.exceptions import NotInIndexError
+from pandasbox.globals import get_next_table_id
+from pandasbox.utils import get_field, set_field, validate_fields
 
 PYTYPE_TO_SQLITE = {float: "NUMBER", int: "NUMBER", str: "TEXT", bool: "NUMBER"}
 
 
-class LiteBox:
+class PandasBox:
     def __init__(
         self,
         objs: Optional[Iterable[Any]] = None,

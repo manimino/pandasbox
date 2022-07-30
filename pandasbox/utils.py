@@ -1,5 +1,5 @@
 from typing import Any, Dict
-from tabulated.exceptions import InvalidFields
+from pandasbox.exceptions import InvalidFields
 
 
 def get_field(obj: Any, field: str):

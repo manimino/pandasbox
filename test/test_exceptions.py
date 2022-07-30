@@ -1,6 +1,6 @@
-from tabulated.exceptions import FieldsTypeError, InvalidFields
+from pandasbox.exceptions import FieldsTypeError, InvalidFields
 
-from tabulated.exceptions import NotInIndexError, FieldsTypeError
+from pandasbox.exceptions import NotInIndexError, FieldsTypeError
 from .conftest import AssertRaises
 
 

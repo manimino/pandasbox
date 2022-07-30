@@ -1,12 +1,12 @@
 """
 You have a million cat photos. Find big, bright pictures of Tiger the Cat.
 
-LiteBox outperforms a list comprehension by about 20x in this case (60ms vs 3ms).
+PandasBox outperforms a list comprehension by about 20x in this case (60ms vs 3ms).
 """
 
 import random
 import time
-from tabulated import LiteBox
+from pandasbox import PandasBox
 
 
 class CatPhoto:
@@ -23,23 +23,23 @@ random.seed(42)
 # Make a million
 photos = [CatPhoto() for _ in range(10 ** 6)]
 
-# Build LiteBox
+# Build PandasBox
 
 t0 = time.time()
-tb = LiteBox(
+tb = PandasBox(
     photos,
     on={"height": int, "width": int, "brightness": float, "name": str},
     index=[("width", "height", "brightness")],
 )
 t_build = time.time() - t0
 
-# Find LiteBox matches
+# Find PandasBox matches
 t0 = time.time()
 tb_matches = tb.find(
     "name == 'Tiger' and height >= 1900 and width >= 1900 and brightness >= 9.0"
 )
-t_tabulated = time.time() - t0
-print(t_tabulated)
+t_pandasbox = time.time() - t0
+print(t_pandasbox)
 
 # Find list comprehension matches
 t0 = time.time()
@@ -54,8 +54,8 @@ lc_matches = [
 t_listcomp = time.time() - t0
 print(t_listcomp)
 
-print(f"Tabulated found {len(tb_matches)} matches in {round(t_tabulated, 6)} seconds.")
+print(f"PandasBox found {len(tb_matches)} matches in {round(t_pandasbox, 6)} seconds.")
 print(
     f"List comprehension found {len(lc_matches)} matches in {round(t_listcomp, 6)} seconds."
 )
-print(f"Speedup: {round(t_listcomp / t_tabulated)}x")
+print(f"Speedup: {round(t_listcomp / t_pandasbox)}x")

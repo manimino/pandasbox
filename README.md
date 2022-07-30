@@ -1,18 +1,20 @@
-# Tabulated
+# PandasBox
 
-[![tests Actions Status](https://github.com/manimino/tabulated/workflows/tests/badge.svg)](https://github.com/manimino/tabulated/actions)
-[![performance Actions Status](https://github.com/manimino/tabulated/workflows/performance/badge.svg)](https://github.com/manimino/tabulated/actions)
+[![tests Actions Status](https://github.com/manimino/pandasbox/workflows/tests/badge.svg)](https://github.com/manimino/pandasbox/actions)
+[![performance Actions Status](https://github.com/manimino/pandasbox/workflows/performance/badge.svg)](https://github.com/manimino/pandasbox/actions)
 
-Containers for finding Python objects by attribute. Backed by SQLite and Pandas.
+Containers for finding Python objects by attribute. Backed by Pandas.
 
-`pip install tabulated`
+`pip install pandasbox`
+
+⚠️ This project is not being maintained. It's unclear if it's actually got a use case.
 
 ____
 
 ### Usage
 ```
-from tabulated import LiteBox
-tb = LiteBox(
+from pandasbox import PandasBox
+tb = PandasBox(
     [{'item': 1, 'size': 1000, 'shape': 'square'}],  # provide a list of objects or dicts 
     {'size': int, 'shape': str})                     # specify attributes to store
 tb.find('size >= 1000 and shape == "square"')        # find by attribute value
@@ -21,16 +23,16 @@ tb.find('size >= 1000 and shape == "square"')        # find by attribute value
 The objects can be any container of `class`, `dataclass`, `namedtuple`, or `dict` objects.
 
 There are two classes available.
- - `LiteBox`: SQLite-backed container. Faster when finding a few of your objects (< 10%).
+ - `PandasBox`: SQLite-backed container. Faster when finding a few of your objects (< 10%).
  - `PandasBox`: Pandas-backed container. Faster when finding many of your objects (>= 10%). 
 
-You can `add()`, `add_many()`, `update()`, and `remove()` items from a LiteBox or PandasBox.
+You can `add()`, `add_many()`, `update()`, and `remove()` items from a PandasBox or PandasBox.
 
 ____
 
 ### How it works
 
-When you do: `LiteBox(list_of_objects, on={'size': int, 'shape': string})` or `PandasBox(...)`
+When you do: `PandasBox(list_of_objects, on={'size': int, 'shape': string})` or `PandasBox(...)`
 
 A table or dataframe is created with 3 columns:
  - size
@@ -42,29 +44,29 @@ On `find()`, a query will run to find the matching objects.
 Only the relevant attributes of the object are copied into the table. The rest of the object remains in memory.
 
 An ideal use case is when you have "heavy" objects containing images / audio / large texts, plus some small
-metadata fields that you want to find by. Just make a LiteBox or PandasBox on the metadata, and use it to find
+metadata fields that you want to find by. Just make a PandasBox or PandasBox on the metadata, and use it to find
 the object without needing to serialize / deserialize the heavy stuff.
 
-The `tabulated` containers are especially good when finding by `<` and `>`. If you only need `==`, consider 
+The `pandasbox` containers are especially good when finding by `<` and `>`. If you only need `==`, consider 
 [filtered](https://pypi.org/project/filtered/) -- it is based on dict lookups which are faster in that case. 
 
 ____
 
 ## API
 
-The API is largely the same across LiteBox and PandasBox. The only difference is initialization.
+The API is largely the same across PandasBox and PandasBox. The only difference is initialization.
 
-### LiteBox Init 
+### PandasBox Init 
 
 ```
-LiteBox(
+PandasBox(
         objs: Optional[Iterable[Any]] = None,
         on: Optional[Dict[str, Any]] = None,
         index: Optional[List[ Union[Tuple[str], str]]] = None
 )
 ```
 
-Creates a LiteBox.
+Creates a PandasBox.
 
  - `objs` is optional. It can be any container of class, dataclass, dict, or namedtuple objects.
  - `on` is required. It specifies the attributes and types to index. The allowed types are float, int, bool, and str.
@@ -91,7 +93,7 @@ PandasBox(
 
 ## Other API functions
 
-The remaining functions are the same for both PandasBox and LiteBox; exceptions as noted.
+The remaining functions are the same for both PandasBox and PandasBox; exceptions as noted.
 
 ### find()
 
@@ -130,10 +132,10 @@ If an added object is missing an attribute, the object will still be added. The 
 
 `updates` is a dict containing the new values for each changed attribute, e.g. `{'x': 5.5, 'b': True}`.
 
-If you change an indexed object's attributes without calling `update()`, the Tabulated will be out of sync and
+If you change an indexed object's attributes without calling `update()`, the PandasBox will be out of sync and
 return inaccurate results. 
 
-`update()` will changes both the value in the Tabulated table and the object's value.
+`update()` will changes both the value in the PandasBox table and the object's value.
 
 Update is fast (less than 1 ms), it's O(log n) in both sqlite and pandas.
 
